@@ -1,13 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
-  imports: [NxWelcomeComponent, RouterModule],
   selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  title = 'interview-task';
 }

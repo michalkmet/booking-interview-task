@@ -21,7 +21,8 @@
           {
             "glob": "**/*",
             "input": "public"
-          }
+          },
+          "./src/mockServiceWorker.js"
         ],
         "styles": ["./src/styles.scss"],
         "scripts": []
