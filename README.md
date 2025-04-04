@@ -117,6 +117,6 @@ Confirms a reservation for a selected slot.
 If the slot ID is invalid or missing:
 ```json
 {
-  "message": "Invalid or missing slot ID."
+  "message": "Invalid or missing slot ID"
 }
 ```
