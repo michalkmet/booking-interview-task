@@ -29,7 +29,7 @@ The required `mockServiceWorker.js` is already included in the repository and co
 All API calls are intercepted and mocked using [MSW](https://mswjs.io/) v2.
 No real backend is used — everything runs in the browser.
 
-
+```
 
 ### `GET /api/available-slots`
 
