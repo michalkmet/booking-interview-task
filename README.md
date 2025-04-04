@@ -8,6 +8,7 @@ This project is a take-home frontend interview task built with:
 - 🧠 Typed APIs with realistic mock data and validation
 
 The app is fully frontend-only — all backend logic is mocked and runs in-browser using MSW.
+Feel free to check handlers.ts for the implementation.
 
 ---
 
