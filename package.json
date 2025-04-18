@@ -9,10 +9,12 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^19.2.10",
     "@angular/common": "~19.2.0",
     "@angular/compiler": "~19.2.0",
     "@angular/core": "~19.2.0",
     "@angular/forms": "~19.2.0",
+    "@angular/material": "^19.2.10",
     "@angular/platform-browser": "~19.2.0",
     "@angular/platform-browser-dynamic": "~19.2.0",
     "@angular/router": "~19.2.0",
@@ -28,9 +30,9 @@
     "@angular/language-service": "~19.2.0",
     "@eslint/js": "^9.8.0",
     "@nx/angular": "20.7.1",
-    "@nx/eslint": "20.7.1",
+    "@nx/eslint": "20.8.0",
     "@nx/eslint-plugin": "20.7.1",
-    "@nx/jest": "20.7.1",
+    "@nx/jest": "20.8.0",
     "@nx/js": "20.7.1",
     "@nx/web": "20.7.1",
     "@nx/workspace": "20.7.1",
@@ -48,7 +50,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-preset-angular": "~14.4.0",
     "msw": "^2.7.3",
-    "nx": "20.7.1",
+    "nx": "20.8.0",
     "prettier": "^2.6.2",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
@@ -56,11 +58,10 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.19.0"
   },
-  "nx": {
-    "includedScripts": []
-  },
+  "nx": {},
   "msw": {
-  "workerDirectory": ["src"]
+    "workerDirectory": [
+      "src"
+    ]
   }
-
 }
