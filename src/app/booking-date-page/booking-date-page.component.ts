@@ -11,7 +11,7 @@ import { AvailableSlots } from './available-slot.model';
 })
 export class BookingDatePageComponent implements OnInit {
   private bookingDateService = inject(BookingDateService);
-  private availableSlots: AvailableSlots = {};
+  public availableSlots: AvailableSlots = {};
 
   ngOnInit() {
     console.log('BookingDatePageComponent initialized');
