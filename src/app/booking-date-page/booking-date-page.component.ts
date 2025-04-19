@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingDateService } from './booking-date-service.service';
 import { AvailableSlots } from './available-slot.model';
@@ -9,7 +9,7 @@ import { AvailableSlots } from './available-slot.model';
   templateUrl: './booking-date-page.component.html',
   styleUrl: './booking-date-page.component.css',
 })
-export class BookingDatePageComponent {
+export class BookingDatePageComponent implements OnInit {
   private bookingDateService = inject(BookingDateService);
   private availableSlots: AvailableSlots = {};
 
