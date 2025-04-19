@@ -1,1 +1,46 @@
-<p>personal-details-page works!</p>
+<form [formGroup]="personalDetailsForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="firstName">Meno:</label>
+    <input id="firstName" type="text" formControlName="firstName" />
+  </div>
+
+  <div>
+    <label for="lastName">Priezvisko:</label>
+    <input id="lastName" type="text" formControlName="lastName" />
+  </div>
+
+  <div>
+    <label for="personalIndentificationNumber">Rodné číslo:</label>
+    <input
+      id="personalIndentificationNumber"
+      type="text"
+      formControlName="personalIndentificationNumber"
+    />
+  </div>
+
+  <div>
+    <label for="country">Štát:</label>
+    <select formControlName="country" id="country">
+      <option value="sk">Slovensko</option>
+      <option value="cz">Česko</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="city">Mesto:</label>
+    <input id="city" type="text" formControlName="city" />
+  </div>
+
+  <div>
+    <label for="email">E-mail:</label>
+    <input id="email" type="email" formControlName="email" />
+  </div>
+
+  @if (emailIsInvalid) {
+  <div class="error-message">
+    <p>Neplatný formát e-mailu.</p>
+  </div>
+  }
+
+  <button type="submit">Pokračovať</button>
+</form>
