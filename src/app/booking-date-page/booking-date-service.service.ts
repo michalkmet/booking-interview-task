@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
+import { BookingApiResponse } from './available-slot.model';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ export class BookingDateService {
 
   constructor(private http: HttpClient) {}
 
-  getAvailableSlots(): Observable<any> {
-    return this.http.get('/api/available-slots');
+  getAvailableSlots(): Observable<BookingApiResponse> {
+    return this.http.get<BookingApiResponse>('/api/available-slots');
   }
 }
