@@ -1,18 +1,29 @@
 <form [formGroup]="personalDetailsForm" (ngSubmit)="onSubmit()">
   <div>
     <label for="firstName">Meno:</label>
-    <input id="firstName" type="text" formControlName="firstName" />
+    <input
+      id="firstName"
+      name="firstName"
+      type="text"
+      formControlName="firstName"
+    />
   </div>
 
   <div>
     <label for="lastName">Priezvisko:</label>
-    <input id="lastName" type="text" formControlName="lastName" />
+    <input
+      id="lastName"
+      name="lastName"
+      type="text"
+      formControlName="lastName"
+    />
   </div>
 
   <div>
     <label for="personalIndentificationNumber">Rodné číslo:</label>
     <input
       id="personalIndentificationNumber"
+      name="personalIndentificationNumber"
       type="text"
       formControlName="personalIndentificationNumber"
     />
@@ -20,7 +31,7 @@
 
   <div>
     <label for="country">Štát:</label>
-    <select formControlName="country" id="country">
+    <select formControlName="country" id="country" name="country">
       <option value="sk">Slovensko</option>
       <option value="cz">Česko</option>
     </select>
@@ -28,12 +39,12 @@
 
   <div>
     <label for="city">Mesto:</label>
-    <input id="city" type="text" formControlName="city" />
+    <input id="city" name="city" type="text" formControlName="city" />
   </div>
 
   <div>
     <label for="email">E-mail:</label>
-    <input id="email" type="email" formControlName="email" />
+    <input id="email" name="email" type="email" formControlName="email" />
   </div>
 
   @if (firstNameIsInvalid) {
