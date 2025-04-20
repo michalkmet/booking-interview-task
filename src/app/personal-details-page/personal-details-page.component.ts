@@ -36,10 +36,9 @@ function mustBeAdultPerson(control: AbstractControl) {
   if (diffInYears >= 18) {
     // is valid
     return null;
-  } else {
-    // is invalid
-    return { mustBeAdultPerson: true };
-  }
+  } 
+  // is invalid
+  return { mustBeAdultPerson: true };
 }
 
 @Component({
@@ -51,10 +50,10 @@ function mustBeAdultPerson(control: AbstractControl) {
 export class PersonalDetailsPageComponent {
   personalDetailsForm = new FormGroup({
     firstName: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.minLength(2)],
     }),
     lastName: new FormControl('', {
-      validators: [Validators.required],
+      validators: [Validators.required, Validators.minLength(2)],
     }),
     personalIndentificationNumber: new FormControl('', {
       validators: [Validators.required, mustBeAdultPerson],
@@ -70,6 +69,29 @@ export class PersonalDetailsPageComponent {
     }),
   });
 
+  get firstNameIsInvalid() {
+    return (
+      this.personalDetailsForm.controls.firstName.invalid &&
+      this.personalDetailsForm.controls.firstName.touched &&
+      this.personalDetailsForm.controls.lastName.dirty
+    );
+  }
+  get lastNameIsInvalid() {
+    return (
+      this.personalDetailsForm.controls.lastName.invalid &&
+      this.personalDetailsForm.controls.lastName.touched &&
+      this.personalDetailsForm.controls.lastName.dirty
+    );
+  }
+
+  get personalIndentificationNumberIsInvalid() {
+    return (
+      this.personalDetailsForm.controls.personalIndentificationNumber.invalid &&
+      this.personalDetailsForm.controls.personalIndentificationNumber.touched &&
+      this.personalDetailsForm.controls.personalIndentificationNumber.dirty
+    );
+  }
+
   get emailIsInvalid() {
     return (
       this.personalDetailsForm.controls.email.invalid &&
@@ -81,5 +103,8 @@ export class PersonalDetailsPageComponent {
   onSubmit() {
     console.log('this.form: ', this.personalDetailsForm);
     console.log('this.form.value: ', this.personalDetailsForm.value);
+    console.log('this.form.value.controls.firstname: ', this.personalDetailsForm.controls.firstName);
+
+    // call service to save data
   }
 }
