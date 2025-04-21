@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -27,6 +27,7 @@ function mustBeAdultPerson(control: AbstractControl) {
   }
 
   const dateOfBirth = new Date(`${year}-${month}-${day}`);
+
   const diffInYears = Math.floor(
     Math.floor(
       (today.getTime() - dateOfBirth.getTime()) / (1000 * 60 * 60 * 24)
@@ -47,7 +48,7 @@ function mustBeAdultPerson(control: AbstractControl) {
   templateUrl: './personal-details-page.component.html',
   styleUrl: './personal-details-page.component.css',
 })
-export class PersonalDetailsPageComponent {
+export class PersonalDetailsPageComponent implements OnInit {
   personalDetailsForm = new FormGroup({
     firstName: new FormControl('', {
       validators: [Validators.required, Validators.minLength(2)],
@@ -58,16 +59,42 @@ export class PersonalDetailsPageComponent {
     personalIndentificationNumber: new FormControl('', {
       validators: [Validators.required, mustBeAdultPerson],
     }),
-    country: new FormControl('', {
+    country: new FormControl<'sk' | 'cz'>('sk', {
       validators: [Validators.required],
     }),
     city: new FormControl('', {
-      validators: [Validators.required],
+      validators: [],
     }),
     email: new FormControl('', {
       validators: [Validators.required, Validators.email],
     }),
   });
+
+  ngOnInit() {
+    console.log('PersonalDetailsPageComponent initialized');
+    this.updateCityValidators();
+  }
+
+  updateCityValidators(){
+    const countryControl = this.personalDetailsForm.get('country');
+    const cityControl = this.personalDetailsForm.get('city');
+
+    this.setAndClearValidators(countryControl, cityControl);
+
+    countryControl?.valueChanges.subscribe(() => {
+      this.setAndClearValidators(countryControl, cityControl);
+    });
+  }
+
+  setAndClearValidators(countryControl: AbstractControl | null , cityControl: AbstractControl | null) {
+    if (countryControl?.value === 'sk') {
+      console.log('Country is SK1');
+      cityControl?.setValidators([Validators.required, Validators.minLength(2)]);
+    } else {
+      cityControl?.clearValidators();
+    }
+    cityControl?.updateValueAndValidity();
+  }
 
   get firstNameIsInvalid() {
     return (
@@ -92,6 +119,10 @@ export class PersonalDetailsPageComponent {
     );
   }
 
+  get cityIsInvalid() {
+    return this.personalDetailsForm.controls.city.invalid;
+  }
+
   get emailIsInvalid() {
     return (
       this.personalDetailsForm.controls.email.invalid &&
@@ -103,7 +134,7 @@ export class PersonalDetailsPageComponent {
   onSubmit() {
     console.log('this.form: ', this.personalDetailsForm);
     console.log('this.form.value: ', this.personalDetailsForm.value);
-    console.log('this.form.value.controls.firstname: ', this.personalDetailsForm.controls.firstName);
+    console.log('this.form.invalid: ', this.personalDetailsForm.invalid);
 
     // call service to save data
   }

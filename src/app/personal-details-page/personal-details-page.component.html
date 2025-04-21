@@ -8,6 +8,11 @@
       formControlName="firstName"
     />
   </div>
+  @if (firstNameIsInvalid) {
+  <div class="error-message">
+    <p>Krstné meno je povinné</p>
+  </div>
+  }
 
   <div>
     <label for="lastName">Priezvisko:</label>
@@ -18,6 +23,11 @@
       formControlName="lastName"
     />
   </div>
+  @if (lastNameIsInvalid) {
+  <div class="error-message">
+    <p>Priezvisko je povinné</p>
+  </div>
+  }
 
   <div>
     <label for="personalIndentificationNumber">Rodné číslo:</label>
@@ -28,6 +38,11 @@
       formControlName="personalIndentificationNumber"
     />
   </div>
+  @if(personalIndentificationNumberIsInvalid){
+  <div class="error-message">
+    <p>Osoba musí mať minimálne 18 rokov alebo zlý formát rodného čísla</p>
+  </div>
+  }
 
   <div>
     <label for="country">Štát:</label>
@@ -42,26 +57,19 @@
     <input id="city" name="city" type="text" formControlName="city" />
   </div>
 
+  @if (cityIsInvalid) {
+  <div class="error-message">
+    <p>Mesto je povinné pre krajinu Sk</p>
+  </div>
+  }
+
   <div>
     <label for="email">E-mail:</label>
     <input id="email" name="email" type="email" formControlName="email" />
   </div>
-
-  @if (firstNameIsInvalid) {
-  <div class="error-message">
-    <p>Krstné meno je povinné</p>
-  </div>
-  } @if (lastNameIsInvalid) {
-  <div class="error-message">
-    <p>Priezvisko je povinné</p>
-  </div>
-  } @if (emailIsInvalid) {
+  @if (emailIsInvalid) {
   <div class="error-message">
     <p>Neplatný formát e-mailu.</p>
-  </div>
-  } @if(personalIndentificationNumberIsInvalid){
-  <div class="error-message">
-    <p>Osoba musí mať minimálne 18 rokov</p>
   </div>
   }
 
