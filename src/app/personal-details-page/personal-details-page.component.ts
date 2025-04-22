@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -7,6 +7,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { PersonalDetailsService } from './personal-details.service';
+import { PersonalData, PersonalDataResponse } from './personal-details.model';
 
 function mustBeAdultPerson(control: AbstractControl) {
   const today = new Date();
@@ -49,6 +51,8 @@ function mustBeAdultPerson(control: AbstractControl) {
   styleUrl: './personal-details-page.component.css',
 })
 export class PersonalDetailsPageComponent implements OnInit {
+  private personalDetailsService = inject(PersonalDetailsService);
+
   personalDetailsForm = new FormGroup({
     firstName: new FormControl('', {
       validators: [Validators.required, Validators.minLength(2)],
@@ -126,10 +130,11 @@ export class PersonalDetailsPageComponent implements OnInit {
   }
 
   get cityIsInvalid() {
-    return (this.personalDetailsForm.controls.city.invalid &&
+    return (
+      this.personalDetailsForm.controls.city.invalid &&
       this.personalDetailsForm.controls.email.touched &&
       this.personalDetailsForm.controls.email.dirty
-    )
+    );
   }
 
   get emailIsInvalid() {
@@ -141,10 +146,28 @@ export class PersonalDetailsPageComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this.form: ', this.personalDetailsForm);
-    console.log('this.form.value: ', this.personalDetailsForm.value);
-    console.log('this.form.invalid: ', this.personalDetailsForm.invalid);
+    const personalData: PersonalData = {
+      firstName: this.personalDetailsForm.value.firstName ?? '',
+      lastName: this.personalDetailsForm.value.lastName ?? '',
+      personalIdentificationNumber:
+        this.personalDetailsForm.value.personalIndentificationNumber ?? '',
+      countryId: this.personalDetailsForm.value.country ?? '',
+      cityId: this.personalDetailsForm.value.city ?? '',
+      email: this.personalDetailsForm.value.email ?? '',
+    };
 
-    // call service to save data
+    console.log('personalData: ', personalData);
+    // TODO: save personal Data somewhere
+
+    this.personalDetailsService
+      .savePersonalData(personalData)
+      .subscribe({
+        next: (personalData: PersonalDataResponse) => {
+          console.log('personalData: ', personalData);
+          // TODO: save reservationID?
+        },
+        error: (e) => console.error(e), // TODO: handle error
+        complete: () => console.info('complete'),
+      });
   }
 }
