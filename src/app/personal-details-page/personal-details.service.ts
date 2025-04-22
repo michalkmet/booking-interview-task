@@ -8,6 +8,7 @@ import { PersonalData, PersonalDataResponse } from './personal-details.model';
 })
 export class PersonalDetailsService {
   constructor(private http: HttpClient) {}
+
   private savePersonalDataUrl = '/api/save-personal-data';
 
   savePersonalData(

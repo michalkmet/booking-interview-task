@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { PersonalDetailsService } from './personal-details.service';
 import { PersonalData, PersonalDataResponse } from './personal-details.model';
+import { Router } from '@angular/router';
 
 function mustBeAdultPerson(control: AbstractControl) {
   const today = new Date();
@@ -52,6 +53,7 @@ function mustBeAdultPerson(control: AbstractControl) {
 })
 export class PersonalDetailsPageComponent implements OnInit {
   private personalDetailsService = inject(PersonalDetailsService);
+  private router = inject(Router);
 
   personalDetailsForm = new FormGroup({
     firstName: new FormControl('', {
@@ -162,9 +164,12 @@ export class PersonalDetailsPageComponent implements OnInit {
     this.personalDetailsService
       .savePersonalData(personalData)
       .subscribe({
-        next: (personalData: PersonalDataResponse) => {
-          console.log('personalData: ', personalData);
+        next: (personalDataResponse: PersonalDataResponse) => {
+          console.log('personalData: ', personalDataResponse);
           // TODO: save reservationID?
+          if (personalDataResponse.message === 'Reservation completed successfully'){
+            this.router.navigate(['/confirmation']);
+          }
         },
         error: (e) => console.error(e), // TODO: handle error
         complete: () => console.info('complete'),
