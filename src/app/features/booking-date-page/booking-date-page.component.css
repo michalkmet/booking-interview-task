@@ -5,3 +5,11 @@
     align-items: center;
     text-align: center;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.inline-calendar-card {
+    max-width: 300px;
+}

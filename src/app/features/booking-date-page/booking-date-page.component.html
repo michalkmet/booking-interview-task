@@ -1,12 +1,42 @@
 <app-header>
-    <img src="first_step.jpg" alt="first_step" id="first_step" />
+  <img src="first_step.jpg" alt="first_step" id="first_step" />
 </app-header>
 <div class="flex-center-container">
-<h1>Doprajte si druhý názor od XX v Nemocnici Bory</h1>
-<p>Vyberte si termín na XX-minútovú konzultáciu<br>
-za poplatok a náš odborník zhodnotí váš zdravotný stav <br>
-a odporučí spôsob liečby.</p>
-<br>
-<p>{{ availableSlots | json }}</p>
-<p>Continue button - will submit choosen slot (save somewhere) and proceed to next page</p>
-<div>
+  <h1>Doprajte si druhý názor od XX v Nemocnici Bory</h1>
+  <p>
+    Vyberte si termín na XX-minútovú konzultáciu<br />
+    za poplatok a náš odborník zhodnotí váš zdravotný stav <br />
+    a odporučí spôsob liečby.
+  </p>
+  <br />
+
+  <div class="flex-container">
+    <div class="booking-calendar">
+      <mat-card class="inline-calendar-card">
+        <mat-calendar [(selected)]="selected"></mat-calendar>
+      </mat-card>
+      <p>Selected date: {{ selected() }}</p>
+    </div>
+    <div class="time-slots">
+      <mat-card class="time-slots-card">
+        <!-- <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+            <mat-selection-list #timeList [formControl]="timeSlots" name="timeSlots" [multiple]="false">
+              @for (timeSlot of availableSlots; track timeSlot) {
+                <mat-list-option [value]="timeSlot.value">{{timeSlot.name}}</mat-list-option>
+              }
+            </mat-selection-list>
+            <p>
+               Option selected: {{date.value ? date.value[0] : 'None'}} 
+            </p>
+          </form>  -->
+      </mat-card>
+    </div>
+  </div>
+
+  <p>{{ availableSlots | json }}</p>
+  <p>
+    Continue button - will submit choosen slot (save somewhere) and proceed to
+    next page
+  </p>
+  <div></div>
+</div>
