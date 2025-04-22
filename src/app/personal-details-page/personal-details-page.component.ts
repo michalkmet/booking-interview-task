@@ -37,7 +37,7 @@ function mustBeAdultPerson(control: AbstractControl) {
   if (diffInYears >= 18) {
     // is valid
     return null;
-  } 
+  }
   // is invalid
   return { mustBeAdultPerson: true };
 }
@@ -75,7 +75,7 @@ export class PersonalDetailsPageComponent implements OnInit {
     this.updateCityValidators();
   }
 
-  updateCityValidators(){
+  updateCityValidators(): void {
     const countryControl = this.personalDetailsForm.get('country');
     const cityControl = this.personalDetailsForm.get('city');
 
@@ -86,10 +86,16 @@ export class PersonalDetailsPageComponent implements OnInit {
     });
   }
 
-  setAndClearValidators(countryControl: AbstractControl | null , cityControl: AbstractControl | null) {
+  setAndClearValidators(
+    countryControl: AbstractControl | null,
+    cityControl: AbstractControl | null
+  ): void {
     if (countryControl?.value === 'sk') {
       console.log('Country is SK1');
-      cityControl?.setValidators([Validators.required, Validators.minLength(2)]);
+      cityControl?.setValidators([
+        Validators.required,
+        Validators.minLength(2),
+      ]);
     } else {
       cityControl?.clearValidators();
     }
@@ -120,7 +126,10 @@ export class PersonalDetailsPageComponent implements OnInit {
   }
 
   get cityIsInvalid() {
-    return this.personalDetailsForm.controls.city.invalid;
+    return (this.personalDetailsForm.controls.city.invalid &&
+      this.personalDetailsForm.controls.email.touched &&
+      this.personalDetailsForm.controls.email.dirty
+    )
   }
 
   get emailIsInvalid() {
