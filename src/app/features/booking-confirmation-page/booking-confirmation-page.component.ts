@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTransferService } from 'src/app/core/services/data-transfer.service';
+import { HeaderComponent } from "../../shared/header/header.component";
 
 @Component({
   selector: 'app-booking-confirmation-page',
-  imports: [CommonModule],
+  imports: [CommonModule, HeaderComponent],
   templateUrl: './booking-confirmation-page.component.html',
   styleUrl: './booking-confirmation-page.component.css',
 })

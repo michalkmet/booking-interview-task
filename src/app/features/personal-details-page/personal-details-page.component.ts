@@ -11,6 +11,7 @@ import { PersonalDetailsService } from './personal-details.service';
 import { PersonalData, PersonalDataResponse } from './personal-details.model';
 import { Router } from '@angular/router';
 import { DataTransferService } from 'src/app/core/services/data-transfer.service';
+import { HeaderComponent } from "../../shared/header/header.component";
 
 function mustBeAdultPerson(control: AbstractControl) {
   const today = new Date();
@@ -48,7 +49,7 @@ function mustBeAdultPerson(control: AbstractControl) {
 
 @Component({
   selector: 'app-personal-details-page',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
   templateUrl: './personal-details-page.component.html',
   styleUrl: './personal-details-page.component.css',
 })
