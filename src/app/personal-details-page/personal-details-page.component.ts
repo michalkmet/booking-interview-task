@@ -158,21 +158,27 @@ export class PersonalDetailsPageComponent implements OnInit {
       email: this.personalDetailsForm.value.email ?? '',
     };
 
-    console.log('personalData: ', personalData);
     // TODO: save personal Data somewhere
 
-    this.personalDetailsService
-      .savePersonalData(personalData)
-      .subscribe({
-        next: (personalDataResponse: PersonalDataResponse) => {
-          console.log('personalData: ', personalDataResponse);
-          // TODO: save reservationID?
-          if (personalDataResponse.message === 'Reservation completed successfully'){
-            this.router.navigate(['/confirmation']);
-          }
-        },
-        error: (e) => console.error(e), // TODO: handle error
-        complete: () => console.info('complete'),
-      });
+    this.personalDetailsService.savePersonalData(personalData).subscribe({
+      next: (personalDataResponse: PersonalDataResponse) => {
+        // TODO: save reservationID?
+        if (
+          personalDataResponse.message === 'Reservation completed successfully'
+        ) {
+          this.router.navigate(['/confirmation']);
+        }
+      },
+      error: (e) => {
+        if (
+          e.error.message === 'Simulated server error: invalid email address.'
+        ) {
+          this.personalDetailsForm.controls.email.setErrors({
+            serverError: true,
+          });
+        }
+      },
+      complete: () => console.info('complete'),
+    });
   }
 }
