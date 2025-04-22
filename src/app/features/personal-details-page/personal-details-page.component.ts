@@ -10,6 +10,7 @@ import {
 import { PersonalDetailsService } from './personal-details.service';
 import { PersonalData, PersonalDataResponse } from './personal-details.model';
 import { Router } from '@angular/router';
+import { DataTransferService } from 'src/app/core/services/data-transfer.service';
 
 function mustBeAdultPerson(control: AbstractControl) {
   const today = new Date();
@@ -53,6 +54,7 @@ function mustBeAdultPerson(control: AbstractControl) {
 })
 export class PersonalDetailsPageComponent implements OnInit {
   private personalDetailsService = inject(PersonalDetailsService);
+  private dataTransferService = inject(DataTransferService);
   private router = inject(Router);
 
   personalDetailsForm = new FormGroup({
@@ -166,6 +168,7 @@ export class PersonalDetailsPageComponent implements OnInit {
         if (
           personalDataResponse.message === 'Reservation completed successfully'
         ) {
+          this.dataTransferService.sendPersonalData(personalData);
           this.router.navigate(['/confirmation']);
         }
       },
