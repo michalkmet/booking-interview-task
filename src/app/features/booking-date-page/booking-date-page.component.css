@@ -10,7 +10,13 @@
   display: flex;
 }
 
-.inline-calendar-card {
+.booking-date-and-slots {
+  background-color: #FFFFFF;
+}
+
+.mdc-card {
+  min-height: 370px;
+  min-width: 300px;
   max-width: 300px;
 }
 
@@ -23,4 +29,30 @@
   .mat-calendar-body-cell-content.mat-focus-indicator.mat-calendar-body-selected {
   background-color: #0ba13b;
   color: white;
+}
+
+.time-slots-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-mdc-radio-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-mdc-radio-button {
+  width: 100px;
+  background-color: #0ba13b;
+  padding: 10px;
+  border-radius: 100px;
+  margin: 5px;
+}
+
+button.submit-timeSlot {
+  background-color: #0ba13b;
+  color: white;
+  float: right;
 }

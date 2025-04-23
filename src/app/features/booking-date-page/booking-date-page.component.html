@@ -1,47 +1,53 @@
 <app-header>
   <img src="first_step.jpg" alt="first_step" id="first_step" />
 </app-header>
-<div class="flex-center-container">
-  <h1>Doprajte si druhý názor od XX v Nemocnici Bory</h1>
-  <p>
-    Vyberte si termín na XX-minútovú konzultáciu<br />
-    za poplatok a náš odborník zhodnotí váš zdravotný stav <br />
-    a odporučí spôsob liečby.
-  </p>
-  <br />
-  <div *ngIf="isLoading" class="p-4 text-center">
-    <mat-spinner></mat-spinner>
-    <p>Loading available dates...</p>
-  </div>
-
-  <div *ngIf="!isLoading" class="flex-container">
-    <div class="booking-calendar">
-      <mat-card class="inline-calendar-card">
-        <mat-calendar [dateClass]="dateClass" [(selected)]="selectedDate">
-        </mat-calendar>
-      </mat-card>
-      <p>Selected date: {{ selectedDate() }}</p>
+<form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+  <div class="flex-center-container">
+    <h1>Doprajte si druhý názor od XX v Nemocnici Bory</h1>
+    <p>
+      Vyberte si termín na XX-minútovú konzultáciu<br />
+      za poplatok a náš odborník zhodnotí váš zdravotný stav <br />
+      a odporučí spôsob liečby.
+    </p>
+    <br />
+    <div *ngIf="isLoading" class="p-4 text-center">
+      <mat-spinner></mat-spinner>
+      <p>Loading available dates...</p>
     </div>
-    <div class="time-slots">
-      <mat-card class="time-slots-card">
-        <!-- <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
-            <mat-selection-list #timeList [formControl]="timeSlots" name="timeSlots" [multiple]="false">
-              @for (timeSlot of availableSlots; track timeSlot) {
-                <mat-list-option [value]="timeSlot.value">{{timeSlot.name}}</mat-list-option>
-              }
-            </mat-selection-list>
-            <p>
-               Option selected: {{date.value ? date.value[0] : 'None'}} 
-            </p>
-          </form>  -->
-      </mat-card>
-    </div>
-  </div>
 
-  <p>{{ availableSlots | json }}</p>
-  <p>
-    Continue button - will submit choosen slot (save somewhere) and proceed to
-    next page
-  </p>
-  <div></div>
-</div>
+    <div *ngIf="!isLoading" class="flex-container booking-date-and-slots">
+      <div class="booking-calendar">
+        <mat-card class="inline-calendar-card">
+          <mat-calendar
+            #calendar
+            [dateClass]="dateClass"
+            [selected]="selectedDate"
+            (selectedChange)="onDateSelected($event)"
+          >
+          </mat-calendar>
+        </mat-card>
+      </div>
+      <div class="time-slots">
+        <mat-card class="time-slots-card">
+          <h3>Dostupné časy</h3>
+
+          <mat-radio-group formControlName="selectedTimeSlot">
+            <mat-radio-button *ngFor="let slot of timeSlots" [value]="slot.id">
+              {{ slot.time }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </mat-card>
+      </div>
+    </div>
+    <p>Selected date: {{ selectedDate }}</p>
+    <p>{{ availableSlots | json }}</p>
+  </div>
+  <button
+    class="submit-timeSlot"
+    mat-flat-button
+    type="submit"
+    [disabled]="!bookingForm.valid"
+  >
+    Submit
+  </button>
+</form>

@@ -1,18 +1,22 @@
-import { Component, inject, model, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingDateService } from './booking-date-service.service';
-import { AvailableSlots } from './available-slot.model';
+import { AvailableSlots, Slot } from './available-slot.model';
 import { HeaderComponent } from '../../shared/header/header.component';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCalendar } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import {MatRadioModule} from '@angular/material/radio';
+
 import {
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -30,6 +34,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatListModule,
     MatProgressSpinnerModule,
     MatCalendar,
+    MatButtonModule,
+    MatRadioModule
   ],
   templateUrl: './booking-date-page.component.html',
   styleUrl: './booking-date-page.component.css',
@@ -37,14 +43,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class BookingDatePageComponent implements OnInit {
   private bookingDateService = inject(BookingDateService);
   public availableSlots: AvailableSlots = {};
-  selectedDate = model<Date | null>(null);
+  selectedDate: Date | null = null;
   datesToHighlight: string[] = [];
   isLoading = true;
+  timeSlots: Slot[] = [];
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
   bookingForm = new FormGroup({
-    date: new FormControl<string | null>(null),
-    timeSlot: new FormControl<string | null>(null),
+    selectedTimeSlot: new FormControl<string | null>(null, [Validators.required]),
   });
 
   ngOnInit() {
@@ -52,17 +58,14 @@ export class BookingDatePageComponent implements OnInit {
 
     // TODO add response type
     this.bookingDateService.getAvailableSlots().subscribe((response) => {
-      console.log('Response:', response);
       this.availableSlots = response.slots;
-      console.log('Available Slots:', this.availableSlots);
 
       for (const [key, value] of Object.entries(this.availableSlots)) {
-        console.log(`Date: ${key}`);
-        console.log(`${key}: ${value}`);
+        // console.log(`Date: ${key}`);
+        // console.log(`${key}: ${value}`);
 
         this.datesToHighlight.push(key);
       }
-      console.log('datesToHighlight1:', this.datesToHighlight);
 
       if (this.calendar) {
         this.calendar.updateTodaysDate();
@@ -80,11 +83,18 @@ export class BookingDatePageComponent implements OnInit {
 
   dateClass = (date: Date): string => {
     const key = this.formatDate(date);
-    console.log('key:', key);
-    console.log('this.availableSlots:', this.availableSlots);
-    console.log('this.availableSlots[key]:', this.availableSlots[key]);
     return this.availableSlots[key] ? 'available-date' : '';
   };
+
+  onDateSelected(date: Date | null): void {
+    console.log('onDateSelected', date);
+    if (date) {
+      this.selectedDate = date;
+      const key = this.formatDate(date);
+      this.timeSlots = this.availableSlots[key] || [];
+      this.bookingForm.reset(); // Clear previous selection
+    }
+  }
 
   onSubmit() {
     console.log('submitted');
