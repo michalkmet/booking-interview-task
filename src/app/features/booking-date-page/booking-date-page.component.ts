@@ -1,8 +1,9 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookingDateService } from './booking-date-service.service';
-import { AvailableSlots, Slot } from './available-slot.model';
+import { AvailableSlots, BookingApiResponse, Slot, SubmitedDateAndTimeSlot } from './available-slot.model';
 import { HeaderComponent } from '../../shared/header/header.component';
+import { Router } from '@angular/router';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCalendar } from '@angular/material/datepicker';
@@ -42,11 +43,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class BookingDatePageComponent implements OnInit {
   private bookingDateService = inject(BookingDateService);
+  private router = inject(Router);
   public availableSlots: AvailableSlots = {};
   selectedDate: Date | null = null;
   datesToHighlight: string[] = [];
   isLoading = true;
   timeSlots: Slot[] = [];
+  submitedDateAndTimeSlot: SubmitedDateAndTimeSlot | null = null;
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
   bookingForm = new FormGroup({
@@ -57,13 +60,10 @@ export class BookingDatePageComponent implements OnInit {
     console.log('BookingDatePageComponent initialized');
 
     // TODO add response type
-    this.bookingDateService.getAvailableSlots().subscribe((response) => {
+    this.bookingDateService.getAvailableSlots().subscribe((response: BookingApiResponse) => {
       this.availableSlots = response.slots;
 
-      for (const [key, value] of Object.entries(this.availableSlots)) {
-        // console.log(`Date: ${key}`);
-        // console.log(`${key}: ${value}`);
-
+      for (const [key] of Object.entries(this.availableSlots)) {
         this.datesToHighlight.push(key);
       }
 
@@ -97,7 +97,14 @@ export class BookingDatePageComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('submitted');
-    console.log(this.bookingForm.value);
+    if (this.selectedDate && this.bookingForm.value.selectedTimeSlot) {
+      console.log('this.formatDate(this.selectedDate):',this.formatDate(this.selectedDate));
+      this.submitedDateAndTimeSlot = {
+        date: this.formatDate(this.selectedDate),
+        timeSlot: this.bookingForm.value.selectedTimeSlot,
+      }
+      this.bookingDateService.sendBookedSlot(JSON.stringify(this.submitedDateAndTimeSlot));
+      this.router.navigate(['/personal']);
+    }
   }
 }

@@ -10,3 +10,8 @@ export interface AvailableSlots {
 export interface BookingApiResponse {
   slots: AvailableSlots;
 }
+
+export interface SubmitedDateAndTimeSlot {
+  date: string;
+  timeSlot: string;
+}

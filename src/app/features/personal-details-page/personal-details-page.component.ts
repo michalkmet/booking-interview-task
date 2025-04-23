@@ -161,8 +161,6 @@ export class PersonalDetailsPageComponent implements OnInit {
       email: this.personalDetailsForm.value.email ?? '',
     };
 
-    // TODO: save personal Data somewhere
-
     this.personalDetailsService.savePersonalData(personalData).subscribe({
       next: (personalDataResponse: PersonalDataResponse) => {
         // TODO: save reservationID?
