@@ -9,13 +9,18 @@
     a odporučí spôsob liečby.
   </p>
   <br />
+  <div *ngIf="isLoading" class="p-4 text-center">
+    <mat-spinner></mat-spinner>
+    <p>Loading available dates...</p>
+  </div>
 
-  <div class="flex-container">
+  <div *ngIf="!isLoading" class="flex-container">
     <div class="booking-calendar">
       <mat-card class="inline-calendar-card">
-        <mat-calendar [(selected)]="selected"></mat-calendar>
+        <mat-calendar [dateClass]="dateClass" [(selected)]="selectedDate">
+        </mat-calendar>
       </mat-card>
-      <p>Selected date: {{ selected() }}</p>
+      <p>Selected date: {{ selectedDate() }}</p>
     </div>
     <div class="time-slots">
       <mat-card class="time-slots-card">

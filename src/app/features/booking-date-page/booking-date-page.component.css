@@ -1,15 +1,26 @@
 .flex-center-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .flex-container {
-    display: flex;
+  display: flex;
 }
 
 .inline-calendar-card {
-    max-width: 300px;
+  max-width: 300px;
+}
+
+::ng-deep .available-date .mat-calendar-body-cell-content {
+  border: 1px solid #0ba13b;
+}
+
+::ng-deep
+  .available-date.mat-calendar-body-active
+  .mat-calendar-body-cell-content.mat-focus-indicator.mat-calendar-body-selected {
+  background-color: #0ba13b;
+  color: white;
 }
