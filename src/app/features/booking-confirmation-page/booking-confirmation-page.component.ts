@@ -1,7 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataTransferService } from 'src/app/core/services/data-transfer.service';
-import { HeaderComponent } from "../../shared/header/header.component";
+import { HeaderComponent } from '../../shared/header/header.component';
+import { combineLatest } from 'rxjs';
+import { Slot } from '../booking-date-page/available-slot.model';
 
 @Component({
   selector: 'app-booking-confirmation-page',
@@ -11,19 +13,24 @@ import { HeaderComponent } from "../../shared/header/header.component";
 })
 export class BookingConfirmationPageComponent implements OnInit {
   private dataTransferService = inject(DataTransferService);
+  pickedSlotParsed: Slot | null = null;
 
   ngOnInit() {
     console.log('ngOnInit BookingConfirmationPageComponent');
-    // TODO - some kinf of join of the two observables
-    this.dataTransferService.pickedSlot$.subscribe((pickedSlot) => {
-      if (pickedSlot) {
-        console.log('Picked slot:', pickedSlot);
+    const pickedSlot = this.dataTransferService.pickedSlot$;
+    const personalData = this.dataTransferService.personalData$;
+
+    combineLatest([pickedSlot, personalData]).subscribe(
+      ([pickedSlotStr, personalData]) => {
+        
+        if ( pickedSlotStr ){
+          this.pickedSlotParsed = JSON.parse(pickedSlotStr);
+        }
+
+        console.log('pickedSlotParsed:', this.pickedSlotParsed);
+        console.log('personalData:', personalData);
+       
       }
-    });
-    this.dataTransferService.personalData$.subscribe((personalData) => {
-      if (personalData) {
-        console.log('PersonalData:', personalData);
-      }
-    });
+    );
   }
 }

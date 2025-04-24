@@ -17,9 +17,3 @@
 .error-message {
     color: #ba1a1a;
 }
-
-.mat-mdc-unelevated-button:not(:disabled) {
-    background-color: #0ba13b;
-    color: white;
-    float: right;
-}
