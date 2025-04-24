@@ -40,3 +40,15 @@ button.submit-button {
   color: white;
   float: right;
 }
+
+.mat-mdc-radio-button {
+  cursor: pointer;
+}
+
+.mat-mdc-radio-button .mdc-radio {
+  display: none !important;
+}
+
+.mat-mdc-radio-button .mdc-label {
+  cursor: pointer;
+}
