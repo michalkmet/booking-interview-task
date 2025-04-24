@@ -25,10 +25,8 @@
 }
 
 .mat-mdc-radio-group {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+margin: 10px;
+  
 }
 
 .mat-mdc-radio-button {
@@ -39,6 +37,7 @@
   border-radius: 100px;
   margin: 5px;
   border: 1px solid #033F75;
+  float: left;
 }
 
 .mat-mdc-radio-button.mat-mdc-radio-checked {
