@@ -1,0 +1,25 @@
+#second_step {
+  max-width: 800px;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.error-message {
+    color: #ba1a1a;
+}
+
+.mat-mdc-unelevated-button:not(:disabled) {
+    background-color: #0ba13b;
+    color: white;
+    float: right;
+}

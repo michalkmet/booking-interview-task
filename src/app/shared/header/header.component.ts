@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   private router = inject(Router);
 
-  goBackToStart(){
-    console.log('goBackToStart');
+  goBackToStart(){;
     this.router.navigate(['/date']);
   }
 }

@@ -1,15 +1,3 @@
-.flex-center-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.flex-container {
-  display: flex;
-}
-
 .booking-date-and-slots {
   background-color: #FFFFFF;
 }
@@ -49,12 +37,6 @@
   padding: 10px;
   border-radius: 100px;
   margin: 5px;
-}
-
-button.submit-timeSlot {
-  background-color: #0ba13b;
-  color: white;
-  float: right;
 }
 
 button.mat-mdc-button-disabled {

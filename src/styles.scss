@@ -12,3 +12,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 100%;
     padding: 2rem;
 }
+
+.flex-center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.flex-container {
+  display: flex;
+}
+
+body {
+  color: #033F75;
+}
+
+button.submit-button {
+  background-color: #0ba13b;
+  color: white;
+  float: right;
+}

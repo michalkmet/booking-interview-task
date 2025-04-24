@@ -11,7 +11,11 @@ import { PersonalDetailsService } from './personal-details.service';
 import { PersonalData, PersonalDataResponse } from './personal-details.model';
 import { Router } from '@angular/router';
 import { DataTransferService } from 'src/app/core/services/data-transfer.service';
-import { HeaderComponent } from "../../shared/header/header.component";
+import { HeaderComponent } from '../../shared/header/header.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 function mustBeAdultPerson(control: AbstractControl) {
   const today = new Date();
@@ -49,7 +53,15 @@ function mustBeAdultPerson(control: AbstractControl) {
 
 @Component({
   selector: 'app-personal-details-page',
-  imports: [CommonModule, ReactiveFormsModule, HeaderComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    HeaderComponent,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule
+  ],
   templateUrl: './personal-details-page.component.html',
   styleUrl: './personal-details-page.component.css',
 })
@@ -80,7 +92,6 @@ export class PersonalDetailsPageComponent implements OnInit {
   });
 
   ngOnInit() {
-    console.log('PersonalDetailsPageComponent initialized');
     this.updateCityValidators();
   }
 
@@ -100,7 +111,6 @@ export class PersonalDetailsPageComponent implements OnInit {
     cityControl: AbstractControl | null
   ): void {
     if (countryControl?.value === 'sk') {
-      console.log('Country is SK1');
       cityControl?.setValidators([
         Validators.required,
         Validators.minLength(2),

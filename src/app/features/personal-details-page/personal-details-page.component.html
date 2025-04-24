@@ -1,80 +1,134 @@
 <app-header>
   <img src="second_step.jpg" alt="second_step" id="second_step" />
 </app-header>
-<form [formGroup]="personalDetailsForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="firstName">Meno:</label>
-    <input
-      id="firstName"
-      name="firstName"
-      type="text"
-      formControlName="firstName"
-    />
-  </div>
-  @if (firstNameIsInvalid) {
-  <div class="error-message">
-    <p>Krstné meno je povinné</p>
-  </div>
-  }
+<div class="flex-center-container">
+  <h3>Osobné údaje</h3>
+  <form [formGroup]="personalDetailsForm" (ngSubmit)="onSubmit()">
+    <table class="example-full-width">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Meno</mat-label>
+            <input
+              matInput
+              id="firstName"
+              name="firstName"
+              type="text"
+              formControlName="firstName"
+            />
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Priezvisko</mat-label>
+            <input
+              matInput
+              id="lastName"
+              name="lastName"
+              type="text"
+              formControlName="lastName"
+            />
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
 
-  <div>
-    <label for="lastName">Priezvisko:</label>
-    <input
-      id="lastName"
-      name="lastName"
-      type="text"
-      formControlName="lastName"
-    />
-  </div>
-  @if (lastNameIsInvalid) {
-  <div class="error-message">
-    <p>Priezvisko je povinné</p>
-  </div>
-  }
+    @if (firstNameIsInvalid) {
+    <div class="error-message float-left">
+      <p>Krstné meno je povinné</p>
+    </div>
+    } @if (lastNameIsInvalid) {
+    <div class="error-message">
+      <p>Priezvisko je povinné</p>
+    </div>
+    }
 
-  <div>
-    <label for="personalIndentificationNumber">Rodné číslo:</label>
-    <input
-      id="personalIndentificationNumber"
-      name="personalIndentificationNumber"
-      type="text"
-      formControlName="personalIndentificationNumber"
-    />
-  </div>
-  @if(personalIndentificationNumberIsInvalid){
-  <div class="error-message">
-    <p>Osoba musí mať minimálne 18 rokov alebo zlý formát rodného čísla</p>
-  </div>
-  }
+    <p>
+      <mat-form-field class="example-full-width float-left">
+        <mat-label>Rodné číslo</mat-label>
+        <input
+          matInput
+          id="personalIndentificationNumber"
+          name="personalIndentificationNumber"
+          type="text"
+          formControlName="personalIndentificationNumber"
+        />
+      </mat-form-field>
+    </p>
 
-  <div>
-    <label for="country">Štát:</label>
-    <select formControlName="country" id="country" name="country">
-      <option value="sk">Slovensko</option>
-      <option value="cz">Česko</option>
-    </select>
-  </div>
+    @if(personalIndentificationNumberIsInvalid){
+    <mat-error>
+      Osoba musí mať minimálne 18 rokov alebo zlý formát rodného čísla
+    </mat-error>
+    }
+    <div style="clear: both"></div>
 
-  <div>
-    <label for="city">Mesto:</label>
-    <input id="city" name="city" type="text" formControlName="city" />
-  </div>
+    <table class="example-full-width">
+      <tr>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Štát</mat-label>
+            <mat-select
+              matNativeControl
+              formControlName="country"
+              id="country"
+              name="country"
+            >
+              <mat-option value="sk">Slovensko</mat-option>
+              <mat-option value="cz">Česko</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="example-full-width">
+            <mat-label>Mesto/Obec</mat-label>
+            <input
+              matInput
+              id="city"
+              name="city"
+              type="text"
+              formControlName="city"
+            />
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
 
-  @if (cityIsInvalid) {
-  <div class="error-message">
-    <p>Mesto je povinné pre krajinu Sk</p>
-  </div>
-  }
+    @if (cityIsInvalid) {
+    <div class="error-message float-right">
+      <p>Mesto je povinné pre krajinu Sk</p>
+    </div>
+    }
 
-  <div>
-    <label for="email">E-mail:</label>
-    <input id="email" name="email" type="email" formControlName="email" />
-  </div>
-  @if (emailIsInvalid) {
-  <div class="error-message">
-    <p>Neplatná e-mailová adresa.</p>
-  </div>
-  }
+    <div style="clear: both"></div>
 
-  <button type="submit" [disabled]="personalDetailsForm.invalid">Pokračovať</button>
-</form>
+    <h3>Kontaktné údaje</h3>
+    <p>
+      <mat-form-field class="float-left">
+        <mat-label for="email">E-mail:</mat-label>
+        <input
+          matInput
+          id="email"
+          name="email"
+          type="email"
+          formControlName="email"
+        />
+      </mat-form-field>
+    </p>
+    <div style="clear: both"></div>
+
+    @if (emailIsInvalid) {
+    <mat-error class="float-left"> Neplatná e-mailová adresa. </mat-error>
+    }
+    <div style="clear: both"></div>
+
+    <button
+      mat-flat-button
+      type="submit"
+      class="submit-button"
+      [disabled]="personalDetailsForm.invalid"
+    >
+      Pokračovať
+    </button>
+  </form>
+</div>
