@@ -56,3 +56,8 @@ button.submit-timeSlot {
   color: white;
   float: right;
 }
+
+button.mat-mdc-button-disabled {
+  background-color: #e2e1e5;
+  color: #9e9da1;
+}
