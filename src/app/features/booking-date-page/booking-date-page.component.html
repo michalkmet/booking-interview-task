@@ -33,7 +33,7 @@
 
           <mat-radio-group formControlName="selectedTimeSlot">
             <mat-radio-button *ngFor="let slot of timeSlots" [value]="slot">
-              {{ slot.time }}
+              <span class="slot-time">{{ slot.time }}</span>
             </mat-radio-button>
           </mat-radio-group>
         </mat-card>
