@@ -97,7 +97,7 @@ export class BookingDatePageComponent implements OnInit {
       this.selectedDate = date;
       const key = this.formatDate(date);
       this.timeSlots = this.availableSlots[key] || [];
-      this.bookingForm.reset(); // Clear previous selection
+      this.bookingForm.reset();
     }
   }
 

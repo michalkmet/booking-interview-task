@@ -60,7 +60,7 @@ function mustBeAdultPerson(control: AbstractControl) {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './personal-details-page.component.html',
   styleUrl: './personal-details-page.component.css',
@@ -173,7 +173,6 @@ export class PersonalDetailsPageComponent implements OnInit {
 
     this.personalDetailsService.savePersonalData(personalData).subscribe({
       next: (personalDataResponse: PersonalDataResponse) => {
-        // TODO: save reservationID?
         if (
           personalDataResponse.message === 'Reservation completed successfully'
         ) {

@@ -4,6 +4,7 @@ import { DataTransferService } from 'src/app/core/services/data-transfer.service
 import { HeaderComponent } from '../../shared/header/header.component';
 import { combineLatest } from 'rxjs';
 import { Slot } from '../booking-date-page/available-slot.model';
+import { PersonalData } from '../personal-details-page/personal-details.model';
 
 @Component({
   selector: 'app-booking-confirmation-page',
@@ -14,22 +15,22 @@ import { Slot } from '../booking-date-page/available-slot.model';
 export class BookingConfirmationPageComponent implements OnInit {
   private dataTransferService = inject(DataTransferService);
   pickedSlotParsed: Slot | null = null;
+  personalData: PersonalData | null = null;
 
   ngOnInit() {
-    console.log('ngOnInit BookingConfirmationPageComponent');
     const pickedSlot = this.dataTransferService.pickedSlot$;
     const personalData = this.dataTransferService.personalData$;
 
     combineLatest([pickedSlot, personalData]).subscribe(
       ([pickedSlotStr, personalData]) => {
-        
-        if ( pickedSlotStr ){
+        if (pickedSlotStr) {
           this.pickedSlotParsed = JSON.parse(pickedSlotStr);
         }
 
-        console.log('pickedSlotParsed:', this.pickedSlotParsed);
-        console.log('personalData:', personalData);
-       
+        if (personalData) {
+          this.personalData = personalData;
+        }
+        // TODO - process the data  this.pickedSlotParsed & personalData
       }
     );
   }
