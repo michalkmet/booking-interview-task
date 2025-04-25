@@ -1,0 +1,13 @@
+TODO:
+
+- ⚠ TODO responsizivita
+- ⚠ TODO  osetrit Go Back button na prehliadaci , nech smeruje na /date
+- ⚠ TODO Stepper: https://material.angular.io/components/stepper/overview 
+- ⚠ TODO  Zhrnutie rezervacie dokoncit
+- ⚠ TODO  Thank you page success/error
+- ⚠ TODO Pridanie Thank you page do routra
+- ⚠ TODO  Ukončenie procesu - zobrazit modal - vlastny komponent
+- ⚠ TODO vyladit validaciu Mesto/obec na personal page
+- ⚠ TODO signals aj pre services
+- ⚠ TODO global error handler
+- ⚠ TODO jednotlive features zlozky sa mozu delit este na podzlozky models, services
