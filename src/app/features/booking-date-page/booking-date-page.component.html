@@ -21,7 +21,7 @@
           <mat-calendar
             #calendar
             [dateClass]="dateClass"
-            [selected]="selectedDate"
+            [selected]="selectedDate()"
             (selectedChange)="onDateSelected($event)"
           >
           </mat-calendar>
@@ -32,7 +32,7 @@
           <h3>Dostupné časy</h3>
 
           <mat-radio-group formControlName="selectedTimeSlot">
-            <mat-radio-button *ngFor="let slot of timeSlots" [value]="slot">
+            <mat-radio-button *ngFor="let slot of timeSlots()" [value]="slot">
               <span class="slot-time">{{ slot.time }}</span>
             </mat-radio-button>
           </mat-radio-group>

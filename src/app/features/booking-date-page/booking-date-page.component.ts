@@ -9,6 +9,7 @@ import {
 } from './available-slot.model';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { Router } from '@angular/router';
+import { signal } from '@angular/core';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -49,12 +50,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class BookingDatePageComponent implements OnInit {
   private bookingDateService = inject(BookingDateService);
   private router = inject(Router);
-  public availableSlots: AvailableSlots = {};
-  selectedDate: Date | null = null;
-  datesToHighlight: string[] = [];
+  public availableSlots = signal<AvailableSlots>({});
+  selectedDate = signal<Date | null>(null);
+  datesToHighlight = signal<string[]>([]);
   isLoading = true;
-  timeSlots: Slot[] = [];
-  submitedDateAndTimeSlot: SubmitedDateAndTimeSlot | null = null;
+  timeSlots = signal<Slot[]>([]);
+  submitedDateAndTimeSlot = signal<SubmitedDateAndTimeSlot | null>(null);
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
   bookingForm = new FormGroup({
@@ -67,10 +68,10 @@ export class BookingDatePageComponent implements OnInit {
     this.bookingDateService
       .getAvailableSlots()
       .subscribe((response: BookingApiResponse) => {
-        this.availableSlots = response.slots;
+        this.availableSlots.set(response.slots);
 
-        for (const [key] of Object.entries(this.availableSlots)) {
-          this.datesToHighlight.push(key);
+        for (const [key] of Object.entries(this.availableSlots())) {
+          this.datesToHighlight().push(key);
         }
 
         if (this.calendar) {
@@ -89,26 +90,27 @@ export class BookingDatePageComponent implements OnInit {
 
   dateClass = (date: Date): string => {
     const key = this.formatDate(date);
-    return this.availableSlots[key] ? 'available-date' : '';
+    return this.availableSlots()[key] ? 'available-date' : '';
   };
 
   onDateSelected(date: Date | null): void {
     if (date) {
-      this.selectedDate = date;
+      this.selectedDate.set(date);
       const key = this.formatDate(date);
-      this.timeSlots = this.availableSlots[key] || [];
+      this.timeSlots.set(this.availableSlots()[key] || []);
       this.bookingForm.reset();
     }
   }
 
   onSubmit() {
-    if (this.selectedDate && this.bookingForm.value.selectedTimeSlot) {
-      this.submitedDateAndTimeSlot = {
-        date: this.formatDate(this.selectedDate),
+    const date = this.selectedDate();
+    if (date && this.bookingForm.value.selectedTimeSlot) {
+      this.submitedDateAndTimeSlot.set({
+        date: this.formatDate(date),
         timeSlot: this.bookingForm.value.selectedTimeSlot,
-      };
+      });
       this.bookingDateService.sendBookedSlot(
-        JSON.stringify(this.submitedDateAndTimeSlot)
+        JSON.stringify(this.submitedDateAndTimeSlot())
       );
       this.router.navigate(['/personal']);
     }
